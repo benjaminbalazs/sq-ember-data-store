@@ -3,7 +3,7 @@ import Ember from 'ember';
 export default Ember.Mixin.create({
 
 	save(model, param) {
-
+		
 		var self = this;
 
         return new Ember.RSVP.Promise(function(resolve, reject) {
