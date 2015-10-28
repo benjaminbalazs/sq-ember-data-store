@@ -11,11 +11,13 @@ export default Ember.Route.reopen({
         if ( this.get('autoreset') ) {
             var model = this.get('currentModel');
             if ( model ) {
-                if ( model.get('isNew') ) {
-                    model.deleteRecord();
-                }
-                if ( model.get('hasDirtyAttributes') ) {
-                    model.rollbackAttributes();
+                if ( model.get ) {
+                    if ( model.get('isNew') ) {
+                        model.deleteRecord();
+                    }
+                    if ( model.get('hasDirtyAttributes') ) {
+                        model.rollbackAttributes();
+                    }
                 }
             }
         }
