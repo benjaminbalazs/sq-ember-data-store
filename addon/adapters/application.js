@@ -3,6 +3,19 @@ import Ember from 'ember';
 
 export default DS.JSONAPIAdapter.extend({
 
+    headers: Ember.computed('session.passport.id', 'session.passport.token', function() {
+
+        if ( this.get('session') ) {
+            return {
+                id: this.get('session.passport.id'),
+                token: this.get('session.passport.token')
+            };
+        } else {
+            return {};
+        }
+
+    }),
+
     init() {
 
 		this._super();
