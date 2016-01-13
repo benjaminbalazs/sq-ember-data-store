@@ -36,7 +36,7 @@ export default DS.JSONAPIAdapter.extend({
         return this.ajax(this.buildURL(type.modelName, id, snapshot, 'findRecord'), 'GET', { data: query } );
 
     },
-
+    
     findAll: function(store, type, sinceToken) {
 
         var query, url;
