@@ -3,13 +3,10 @@ import Ember from 'ember';
 
 export default DS.JSONAPIAdapter.extend({
 
-    headers: Ember.computed('session.passport.id', 'session.passport.token', function() {
+    headers: Ember.computed('session.headers.id', 'session.headers.token', function() {
 
         if ( this.get('session') ) {
-            return {
-                id: this.get('session.passport.id'),
-                token: this.get('session.passport.token')
-            };
+            return this.get('session.headers');
         } else {
             return {};
         }
@@ -36,7 +33,7 @@ export default DS.JSONAPIAdapter.extend({
         return this.ajax(this.buildURL(type.modelName, id, snapshot, 'findRecord'), 'GET', { data: query } );
 
     },
-    
+
     findAll: function(store, type, sinceToken) {
 
         var query, url;
