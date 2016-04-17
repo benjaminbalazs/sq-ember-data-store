@@ -17,7 +17,7 @@ export default DS.JSONAPIAdapter.extend({
 
 		this._super();
 
-		var config = this.container.lookupFactory('config:environment');
+		var config = Ember.getOwner(this)._lookupFactory('config:environment');
 		this.namespace = config.APP.api_namespace;
 
 	},
