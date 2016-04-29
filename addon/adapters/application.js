@@ -22,6 +22,7 @@ export default DS.JSONAPIAdapter.extend({
 
 	},
 
+    /*
     findRecord: function(store, type, id, snapshot) {
 
         var included = this.getIncludedRelationships(type);
@@ -71,5 +72,5 @@ export default DS.JSONAPIAdapter.extend({
         return included;
 
     }
-
+    */
 });
