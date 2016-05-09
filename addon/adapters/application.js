@@ -3,7 +3,7 @@ import Ember from 'ember';
 
 export default DS.JSONAPIAdapter.extend({
 
-    headers: Ember.computed('session.headers.id', 'session.headers.token', function() {
+    headers: Ember.computed('session.headers.id', 'session.headers.token', 'session.headers.socket_id', function() {
 
         if ( this.get('session') ) {
             return this.get('session.headers');
