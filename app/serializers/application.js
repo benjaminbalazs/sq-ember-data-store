@@ -2,11 +2,11 @@ import DS from 'ember-data';
 
 export default DS.JSONAPISerializer.extend({
 
-	keyForAttribute: function(key) {
+	keyForAttribute(key) {
 		return key;
 	},
 
-	keyForRelationship: function(key) {
+	keyForRelationship(key) {
 		return key;
 	},
 
