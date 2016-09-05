@@ -13,16 +13,21 @@ export default Ember.Mixin.create({
 				if ( model ) {
 
 					model.get(param).pushObject(self);
-					model.save().then(function() {
-						resolve(data);
-					}).catch(function(error) {
-						reject(error);
-					});
 
+					if ( model.get('hasDirtyAttributes') === true ) {
+
+						model.save().then(function() {
+							resolve(data);
+						}).catch(function(error) {
+							reject(error);
+						});
+
+					} else {
+						resolve();
+					}
 				} else {
 					resolve();
 				}
-
 			}).catch(function(error) {
 				reject(error);
 			});
