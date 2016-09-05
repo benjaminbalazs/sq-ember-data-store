@@ -23,10 +23,10 @@ export default Ember.Mixin.create({
 						});
 
 					} else {
-						resolve();
+						resolve(data);
 					}
 				} else {
-					resolve();
+					resolve(data);
 				}
 			}).catch(function(error) {
 				reject(error);
