@@ -6,33 +6,22 @@ export default Ember.Mixin.create({
 
 		var self = this;
 
-        return new Ember.RSVP.Promise(function(resolve, reject) {
+        return self._super().then(function() {
 
-            self._super().then(function(data) {
+			if ( model ) {
 
-				if ( model ) {
+				model.get(param).pushObject(self);
 
-					model.get(param).pushObject(self);
-					//console.log(model.get('hasDirtyAttributes'));
-					//if ( model.get('hasDirtyAttributes') === true ) {
+				model.save().then(function() {
 
-						model.save().then(function() {
-							resolve(data);
-						}).catch(function(error) {
-							reject(error);
-						});
+					return Ember.RSVP.Promise.resolve();
 
-					//} else {
-					//	resolve(data);
-				//	}
-				} else {
-					resolve(data);
-				}
-			}).catch(function(error) {
-				reject(error);
-			});
+				});
 
-        });
+			} else {
+				return Ember.RSVP.Promise.resolve();
+			}
+		});
 
 	}
 
