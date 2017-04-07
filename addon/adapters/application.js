@@ -1,24 +1,30 @@
 import DS from 'ember-data';
 import Ember from 'ember';
+import config from 'ember-get-config';
 
 export default DS.JSONAPIAdapter.extend({
 
-    headers: Ember.computed('session.headers.id', 'session.headers.token', 'session.headers.socket_id', function() {
+    fastboot: Ember.inject.service(),
 
-        if ( this.get('session') ) {
+    headers: Ember.computed('session.headers.Token', 'session.headers.User-ID', 'session.headers.Socket-ID', function() {
+
+        if ( this.get('session.headers.User-ID') ) {
             return this.get('session.headers');
         } else {
-            return {};
+            return {
+                'User-ID': '',
+                'Token': '',
+            };
         }
 
     }),
 
     init() {
 
-		this._super();
+		this._super(...arguments);
 
-		var config = Ember.getOwner(this)._lookupFactory('config:environment');
-		this.namespace = config.APP.api_namespace;
+		this.set('namespace', config.APP.api_namespace);
+        this.set('host', config.APP.protocol + config.APP.domain);
 
 	},
 
