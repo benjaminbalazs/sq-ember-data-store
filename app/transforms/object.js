@@ -4,7 +4,7 @@ import DS from 'ember-data';
 export default DS.Transform.extend({
 
   deserialize(value) {
-    if (!Ember.$.isPlainObject(value)) {
+    if (typeof(value) !== 'object') {
       return {};
     } else {
       return value;
@@ -12,11 +12,11 @@ export default DS.Transform.extend({
   },
 
   serialize(value) {
-    if (!Ember.$.isPlainObject(value)) {
+    if (typeof(value) !== 'object') {
       return {};
     } else {
       return value;
     }
   }
-  
+
 });

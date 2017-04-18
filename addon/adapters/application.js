@@ -21,10 +21,11 @@ export default DS.JSONAPIAdapter.extend({
 
     init() {
 
-		this._super(...arguments);
+		this._super();
 
 		this.set('namespace', config.APP.api_namespace);
-        this.set('host', config.APP.protocol + config.APP.domain);
+        
+        //this.set('host', config.APP.protocol + config.APP.domain);
 
 	},
 
