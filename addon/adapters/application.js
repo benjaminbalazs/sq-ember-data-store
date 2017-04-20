@@ -24,8 +24,10 @@ export default DS.JSONAPIAdapter.extend({
 		this._super();
 
 		this.set('namespace', config.APP.api_namespace);
-        
-        //this.set('host', config.APP.protocol + config.APP.domain);
+
+        if ( config.environment === "production" ) {
+            this.set('host', config.APP.protocol + config.APP.domain);
+        }
 
 	},
 
