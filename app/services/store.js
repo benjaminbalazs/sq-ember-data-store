@@ -3,7 +3,7 @@ import Model from './../models/model';
 
 export default DS.Store.extend({
 
-	lengths : Ember.Object.create(),
+	lengths: Ember.Object.create(),
 
     increment(type) {
 
