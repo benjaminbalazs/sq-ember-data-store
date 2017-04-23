@@ -21,6 +21,7 @@ export default DS.JSONAPIAdapter.extend({
         if ( this.get('fastboot.isFastBoot') === true && config.environment === "production" ) {
 
             var headers = this.get('fastboot.request.headers');
+            console.log(headers.get('x-original-protocol'), headers.get('x-original-host'));
             this.set('host', headers.get('x-original-protocol') + headers.get('x-original-host'));
 
         }
