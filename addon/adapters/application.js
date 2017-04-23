@@ -18,14 +18,19 @@ export default DS.JSONAPIAdapter.extend({
 
 		this.set('namespace', config.APP.api_namespace);
 
-        if ( this.get('fastboot.isFastBoot') === true ) {
-            console.log(this.get('fastboot.request.host'));
-            console.log(this.get('fastboot.request'));
+        if ( this.get('fastboot.isFastBoot') === true && config.environment === "production" ) {
+
+            var headers = this.get('fastboot.request.headers');
+
+            var host = headers.get('x-original-host');
+
+            this.set('host', host);
+
         }
 
-        if ( config.environment === "production" ) {
-            this.set('host', config.APP.protocol + config.APP.domain);
-        }
+        //if ( config.environment === "production" ) {
+        //    this.set('host', config.APP.protocol + config.APP.domain);
+        //}
 
 	},
 
