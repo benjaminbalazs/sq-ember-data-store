@@ -74,9 +74,9 @@ export default Ember.Service.extend(Host,{
     			headers: headers,
     		};
 
-            var url = this.getHost() + "/" + config.APP.api_namespace + "/" + path;
-            if ( this.get('fastboot.isFastBoot') !== true ) {
-                url = config.APP.api_namespace + "/" + path;
+            var url = config.APP.api_namespace + "/" + path;
+            if ( this.get('fastboot.isFastBoot') === true ) {
+                url = this.getHost() + "/" + config.APP.api_namespace + "/" + path;
             }
             if ( relative === true ) {
                 url = path;
