@@ -6,11 +6,11 @@ export default Ember.Mixin.create({
 
     getHost() {
 
-        let headers = this.get('fastboot.request.headers');
+        var headers = this.get('fastboot.request.headers');
 
-        let host = headers.get('x-original-host');
-        let protocol = headers.get('x-original-protocol');
-        console.log(host, protocol);
+        var host = headers.get('x-original-host');
+        var protocol = headers.get('x-original-protocol');
+
         if ( host.indexOf('soluqi') !== -1 ) {
             protocol = "https";
         }
