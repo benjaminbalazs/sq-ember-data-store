@@ -6,16 +6,9 @@ export default DS.JSONAPIAdapter.extend({
 
     fastboot: Ember.inject.service(),
 
-    headers: Ember.computed('session.headers.Token', 'session.headers.User-ID', 'session.headers.Socket-ID', function() {
+    headers: Ember.computed('session.headers.Token', 'session.headers.User-ID', 'session.headers.Socket-ID', 'session.headers.Site-ID', function() {
 
-        if ( this.get('session.headers.User-ID') ) {
-            return this.get('session.headers');
-        } else {
-            return {
-                'User-ID': '',
-                'Token': '',
-            };
-        }
+        return this.get('session.headers');
 
     }),
 
