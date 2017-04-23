@@ -57,9 +57,13 @@ export default Ember.Object.extend({
 
         var self = this;
 
-        var list = Object.keys(this).filter(function(item) {
-            return ( self.get('observables').indexOf(item) !== -1 );
-        });
+        var list = Object.keys(this);
+
+        if ( this.get('observables') ) {
+            list = list.filter(function(item) {
+                return ( self.get('observables').indexOf(item) !== -1 );
+            });
+        }
 
         var object = {};
         for (var i = 0; i < list.length; i++) {

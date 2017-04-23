@@ -8,7 +8,7 @@ export default Ember.Service.extend({
 
     // GET ---------------------------------------------------------------------
 
-    GET(path, authenticate, relative) {
+    GET(path, authenticate, relative, headers) {
 
         if ( this.get('fastboot.isFastBoot') === false ) {
 
@@ -17,21 +17,21 @@ export default Ember.Service.extend({
             if ( data ) {
                 return Ember.RSVP.Promise.resolve(data);
             } else {
-                return this._get(path, authenticate, relative);
+                return this._get(path, authenticate, relative, headers);
             }
 
         } else {
-            return this._get(path, authenticate, relative);
+            return this._get(path, authenticate, relative, headers);
         }
 
     },
 
-    _get(path, authenticate, relative) {
+    _get(path, authenticate, relative, headers) {
 
         if ( authenticate ) {
             return this.factory('GET', path, this.get('session.headers'), relative);
         } else {
-            return this.factory('GET', path, null, relative);
+            return this.factory('GET', path, headers, relative);
         }
 
     },
