@@ -1,8 +1,9 @@
 import DS from 'ember-data';
 import Ember from 'ember';
 import config from 'ember-get-config';
+import Host from 'sq-ember-data-store/mixins/host';
 
-export default DS.JSONAPIAdapter.extend({
+export default DS.JSONAPIAdapter.extend(Host,{
 
     fastboot: Ember.inject.service(),
 
@@ -20,9 +21,7 @@ export default DS.JSONAPIAdapter.extend({
 
         if ( this.get('fastboot.isFastBoot') === true && config.environment === "production" ) {
 
-            var headers = this.get('fastboot.request.headers');
-        
-            this.set('host', headers.get('x-original-protocol') + '/' + headers.get('x-original-host'));
+            this.set('host', this.getHost());
 
         }
 

@@ -1,8 +1,9 @@
 import Ember from 'ember';
 import config from 'ember-get-config';
 import fetch from 'ember-network/fetch';
+import Host from 'sq-ember-data-store/mixins/host';
 
-export default Ember.Service.extend({
+export default Ember.Service.extend(Host,{
 
     session: Ember.inject.service(),
 
@@ -72,7 +73,7 @@ export default Ember.Service.extend({
     			headers: headers,
     		};
 
-            var url = config.APP.protocol + config.APP.domain + "/" + config.APP.api_namespace + "/" + path;
+            var url = this.getHost() + "/" + config.APP.api_namespace + "/" + path;
             if ( relative === true ) {
                 url = path;
             }
