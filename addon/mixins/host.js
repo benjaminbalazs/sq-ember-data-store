@@ -7,7 +7,7 @@ export default Ember.Mixin.create({
     getHost() {
 
         var headers = this.get('fastboot.request.headers');
-
+        console.log(headers);
         var host = headers.get('x-original-host');
         var protocol = headers.get('x-original-protocol');
 
