@@ -1,5 +1,4 @@
 import Ember from 'ember';
-import config from 'ember-get-config';
 
 export default Ember.Mixin.create({
 
@@ -7,17 +6,16 @@ export default Ember.Mixin.create({
 
     getHost() {
 
-        if ( this.get('fastboot.isFastBoot') === true ) {
+        let headers = this.get('fastboot.request.headers');
 
-            var headers = this.get('fastboot.request.headers');
+        let host = headers.get('x-original-host');
+        let protocol = headers.get('x-original-protocol');
 
-            return headers.get('x-original-protocol') + '://' + headers.get('x-original-host');
-
-        } else {
-
-            return config.APP.protocol + config.APP.domain;
-
+        if ( host.indexof('soluqi') !== -1 ) {
+            protocol = "https";
         }
+
+        return protocol + '://' + host;
 
     }
 

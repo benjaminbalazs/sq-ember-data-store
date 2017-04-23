@@ -6,6 +6,7 @@ import Host from 'sq-ember-data-store/mixins/host';
 export default Ember.Service.extend(Host,{
 
     session: Ember.inject.service(),
+    fastboot: Ember.inject.service(),
 
     // GET ---------------------------------------------------------------------
 
@@ -74,6 +75,9 @@ export default Ember.Service.extend(Host,{
     		};
 
             var url = this.getHost() + "/" + config.APP.api_namespace + "/" + path;
+            if ( this.get('fastboot.isFastBoot') !== true ) {
+                url = config.APP.api_namespace + "/" + path;
+            }
             if ( relative === true ) {
                 url = path;
             }
