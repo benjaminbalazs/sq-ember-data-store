@@ -10,7 +10,7 @@ export default Ember.Mixin.create({
 
         let host = headers.get('x-original-host');
         let protocol = headers.get('x-original-protocol');
-
+        console.log(host, protocol);
         if ( host.indexOf('soluqi') !== -1 ) {
             protocol = "https";
         }
