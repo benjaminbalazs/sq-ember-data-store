@@ -10,8 +10,8 @@ export default Ember.Mixin.create({
         if ( this.get('fastboot.isFastBoot') === true ) {
 
             var headers = this.get('fastboot.request.headers');
-            console.log(headers.get('x-original-protocol') + '/' + headers.get('x-original-host'));
-            return headers.get('x-original-protocol') + '/' + headers.get('x-original-host');
+            
+            return headers.get('x-original-protocol') + '://' + headers.get('x-original-host');
 
         } else {
 
