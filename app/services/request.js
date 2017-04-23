@@ -70,9 +70,14 @@ export default Ember.Service.extend(Host,{
 
             data = {
     			method: method,
-    			body: JSON.stringify(data),
-    			headers: headers,
     		};
+
+            if ( method !== "GET" ) {
+                data.body = JSON.stringify(data);
+            }
+            if ( headers ) {
+                data.headers = headers;
+            }
 
             var url = config.APP.api_namespace + "/" + path;
 
