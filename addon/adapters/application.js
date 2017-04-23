@@ -17,7 +17,7 @@ export default DS.JSONAPIAdapter.extend({
 		this._super();
 
 		this.set('namespace', config.APP.api_namespace);
-
+        console.log('d',  this.get('fastboot.isFastBoot'), config.environment);
         if ( this.get('fastboot.isFastBoot') === true && config.environment === "production" ) {
 
             var headers = this.get('fastboot.request.headers');
