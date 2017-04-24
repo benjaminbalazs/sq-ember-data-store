@@ -73,7 +73,7 @@ export default Ember.Service.extend(Host,{
     		};
 
             if ( method !== "GET" ) {
-                data.body = JSON.stringify(data);
+                data.body = JSON.stringify(data.data);
             }
             if ( headers ) {
                 data.headers = headers;
