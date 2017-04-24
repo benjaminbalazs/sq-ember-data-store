@@ -68,15 +68,15 @@ export default Ember.Service.extend(Host,{
             if ( !headers ) { headers = {}; }
             headers['Content-Type'] = 'application/vnd.api+json';
 
-            data = {
+            var object = {
     			method: method,
     		};
 
             if ( method !== "GET" ) {
-                data.body = JSON.stringify(data.data);
+                object.body = JSON.stringify(data);
             }
             if ( headers ) {
-                data.headers = headers;
+                object.headers = headers;
             }
 
             var url = "/" + config.APP.api_namespace + "/" + path;
@@ -88,7 +88,7 @@ export default Ember.Service.extend(Host,{
                 url = path;
             }
 
-            fetch( url, data ).then(self.checkStatus).then(function(response) { return response.json(); }).then(function(data) {
+            fetch( url, object ).then(self.checkStatus).then(function(response) { return response.json(); }).then(function(data) {
 
                 if ( self.get('fastboot.isFastBoot') === true ) {
                     self.addShoebox(method, path, data);
