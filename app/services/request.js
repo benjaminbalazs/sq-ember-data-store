@@ -80,7 +80,7 @@ export default Ember.Service.extend(Host,{
             }
 
             var url = "/" + config.APP.api_namespace + "/" + path;
-
+            
             if ( self.get('fastboot.isFastBoot') === true ) {
                 url = self.getHost() + "/" + config.APP.api_namespace + "/" + path;
             }
@@ -121,8 +121,6 @@ export default Ember.Service.extend(Host,{
     },
 
     // SHOEBOX -----------------------------------------------------------------
-
-    fastboot: Ember.inject.service(),
 
     addShoebox(method, path, data) {
 
