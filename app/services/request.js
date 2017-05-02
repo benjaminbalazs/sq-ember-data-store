@@ -12,7 +12,7 @@ export default Ember.Service.extend(Host,{
 
     GET(path, authenticate, relative, headers) {
 
-        if ( this.get('fastboot.isFastBoot') === false ) {
+        if ( this.get('fastboot.isFastBoot') === true ) {
 
             var data = this.getShoebox('GET', path);
 
@@ -80,7 +80,7 @@ export default Ember.Service.extend(Host,{
             }
 
             var url = "/" + config.APP.api_namespace + "/" + path;
-            
+
             if ( self.get('fastboot.isFastBoot') === true ) {
                 url = self.getHost() + "/" + config.APP.api_namespace + "/" + path;
             }
