@@ -87,7 +87,7 @@ export default Ember.Service.extend(Host,{
             if ( relative === true ) {
                 url = path;
             }
-            console.log(url);
+
             fetch( url, object ).then(self.checkStatus).then(function(response) { return response.json(); }).then(function(data) {
 
                 if ( self.get('fastboot.isFastBoot') === true ) {
