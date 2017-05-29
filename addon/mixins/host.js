@@ -16,7 +16,6 @@ export default Ember.Mixin.create({
         if ( realHost && realScheme ) {
             host = realScheme + '://' + realHost;
         }
-        console.log(realHost, realScheme);
 
         if ( config.fastboot.api_namespace ) {
             return host + '/' + config.fastboot.api_namespace;
