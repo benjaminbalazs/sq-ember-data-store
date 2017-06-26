@@ -10,8 +10,4 @@ export default DS.JSONAPISerializer.extend({
 		return key;
 	},
 
-	//modelNameFromPayloadKey(payloadType) {
-    //	return payloadType;
-  	//},
-
 });

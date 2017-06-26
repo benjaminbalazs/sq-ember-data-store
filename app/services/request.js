@@ -12,6 +12,10 @@ export default Ember.Service.extend(Host,{
 
     GET(path, authenticate, relative, headers) {
 
+        if ( !headers ) {
+            headers = this.get('session.headers');
+        }
+
         if ( this.get('fastboot.isFastBoot') === true ) {
 
             var data = this.getShoebox('GET', path);
