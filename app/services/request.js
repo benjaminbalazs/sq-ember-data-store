@@ -35,33 +35,37 @@ export default Ember.Service.extend(Host,{
     _get(path, authenticate, relative, headers) {
 
         if ( authenticate ) {
-            return this.factory('GET', path, this.get('session.headers'), relative);
+            return this.factory('GET', path, this.get('session.headers'), relative, 'application/vnd.api+json');
         } else {
-            return this.factory('GET', path, headers, relative);
+            return this.factory('GET', path, headers, relative, 'application/vnd.api+json');
         }
 
     },
 
     // POST --------------------------------------------------------------------
 
-    POST(path, attributes, authenticate, relative) {
+    POST(path, attributes, authenticate, relative, headers) {
 
         var data = { data: { attributes: attributes } };
 
-        var headers = { 'Access-Control-Allow-Origin': '*' };
+        if ( !headers ) {
+            headers = {};
+        }
+
+        headers['Access-Control-Allow-Origin'] = '*';
 
         if ( authenticate ) {
             headers['User-ID'] = this.get('session.headers.User-ID');
             headers['Token'] = this.get('session.headers.Token');
         }
 
-        return this.factory('POST', path, headers, data, relative);
+        return this.factory('POST', path, headers, data, relative, 'application/vnd.api+json');
 
     },
 
     // PRIVATE -----------------------------------------------------------------
 
-    factory(method, path, headers, data, relative) {
+    factory(method, path, headers, data, relative, contentType) {
 
         this.set('processing', true);
 
@@ -69,19 +73,31 @@ export default Ember.Service.extend(Host,{
 
         return new Ember.RSVP.Promise(function(resolve, reject) {
 
+            var object = { method: method, };
+
+            // HEADERS
             if ( !headers ) { headers = {}; }
-            headers['Content-Type'] = 'application/vnd.api+json';
 
-            var object = {
-    			method: method,
-    		};
-
-            if ( method !== "GET" ) {
-                object.body = JSON.stringify(data);
+            // CONTENT TYPE
+            if ( contentType ) {
+                headers['Content-Type'] = contentType;
             }
             if ( headers ) {
                 object.headers = headers;
             }
+
+            // GET
+            if ( method !== "GET" ) {
+
+                if ( contentType ) {
+                    object.body = JSON.stringify(data);
+                } else {
+                    object.body = data;
+                }
+
+            }
+
+            // URL
 
             var url = "/" + config.APP.api_namespace + "/" + path;
 
