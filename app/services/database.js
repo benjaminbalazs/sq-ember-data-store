@@ -48,7 +48,7 @@ export default Ember.Service.extend({
 		var self = this;
 
 		list = { list: list };
-		var query = JSON.stringify(list);
+		var query = encodeURIComponent(JSON.stringify(list));
 
 		if ( this.get('queryStore').indexOf(query) !== -1 ) {
 
