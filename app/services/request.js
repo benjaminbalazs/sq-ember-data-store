@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import config from 'ember-get-config';
-import fetch from 'ember-network/fetch';
+import fetch from 'fetch';
 import Host from 'sq-ember-data-store/mixins/host';
 
 export default Ember.Service.extend(Host,{
@@ -10,34 +10,36 @@ export default Ember.Service.extend(Host,{
 
     // GET ---------------------------------------------------------------------
 
-    GET(path, authenticate, relative, headers) {
+    GET(path, authenticate, relative, headers, shoebox) {
 
         if ( !headers ) {
             headers = this.get('session.headers');
         }
 
-        if ( this.get('fastboot.isFastBoot') === true ) {
+        if ( this.get('fastboot.isFastBoot') !== true && shoebox !== false ) {
 
             var data = this.getShoebox('GET', path);
 
             if ( data ) {
                 return Ember.RSVP.Promise.resolve(data);
             } else {
-                return this._get(path, authenticate, relative, headers);
+                return this._get(path, authenticate, relative, headers, shoebox);
             }
 
         } else {
-            return this._get(path, authenticate, relative, headers);
+
+            return this._get(path, authenticate, relative, headers, shoebox);
+
         }
 
     },
 
-    _get(path, authenticate, relative, headers) {
+    _get(path, authenticate, relative, headers, shoebox) {
 
         if ( authenticate ) {
-            return this.factory('GET', path, this.get('session.headers'), relative, 'application/vnd.api+json');
+            return this.factory('GET', path, this.get('session.headers'), relative, 'application/vnd.api+json', shoebox);
         } else {
-            return this.factory('GET', path, headers, relative, 'application/vnd.api+json');
+            return this.factory('GET', path, headers, relative, 'application/vnd.api+json', shoebox);
         }
 
     },
@@ -65,7 +67,7 @@ export default Ember.Service.extend(Host,{
 
     // PRIVATE -----------------------------------------------------------------
 
-    factory(method, path, headers, data, relative, contentType) {
+    factory(method, path, headers, data, relative, contentType, shoebox) {
 
         this.set('processing', true);
 
@@ -110,7 +112,7 @@ export default Ember.Service.extend(Host,{
 
             fetch( url, object ).then(self.checkStatus).then(function(response) { return response.json(); }).then(function(data) {
 
-                if ( self.get('fastboot.isFastBoot') === true ) {
+                if ( self.get('fastboot.isFastBoot') === true && shoebox !== false ) {
                     self.addShoebox(method, path, data);
                 }
 

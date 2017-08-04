@@ -4,6 +4,9 @@ export default Ember.Service.extend({
 
 	store: Ember.inject.service(),
 	request: Ember.inject.service(),
+	fastboot: Ember.inject.service(),
+
+	//
 
 	list(modelName, settings) {
 
@@ -41,24 +44,28 @@ export default Ember.Service.extend({
 
 	// QUERY -------------------------------------------------------------------
 
-	queryStore: [],
+	init() {
+
+		this._super();
+
+	},
 
 	query(list, authenticate) {
 
 		var self = this;
 
 		list = { list: list };
-		var query = encodeURIComponent(JSON.stringify(list));
+		var query = JSON.stringify(list);
 
-		if ( this.get('queryStore').indexOf(query) !== -1 ) {
+		if ( this.getShoebox(query) === true ) {
 
 			return Ember.RSVP.Promise.resolve();
 
 		} else {
 
-			return this.get('request').GET("jsonapi/" + query, authenticate).then(function(data) {
+			return this.get('request').GET("jsonapi/" + encodeURIComponent(query), authenticate, null, null, false).then(function(data) {
 
-				self.get('queryStore').push(query);
+				self.addShoebox(query);
 
 				self.get('store').pushPayload(data);
 
@@ -69,5 +76,59 @@ export default Ember.Service.extend({
 		}
 
 	},
+
+	// SHOEBOX -----------------------------------------------------------------
+
+    addShoebox(query) {
+
+		var selector = this.getSelector(query);
+
+		if ( this.get('fastboot.isFastBoot') === true ) {
+			this.get('fastboot.shoebox').put(selector, { status: true });
+		}
+
+		if ( this.get('queryStore') ) {
+			this.get('queryStore').push(selector);
+		} else {
+			this.set('queryStore', [selector]);
+		}
+
+    },
+
+    getShoebox(query) {
+
+		var selector = this.getSelector(query);
+
+		if ( this.get('fastboot.isFastBoot') !== true ) {
+
+			var data = this.get('fastboot.shoebox').retrieve(selector);
+
+			if ( data ) {
+				return true;
+			}
+
+		}
+
+		if ( this.get('queryStore') ) {
+			return ( this.get('queryStore').indexOf(selector) !== -1 );
+		} else {
+			return false;
+		}
+
+    },
+
+    getSelector(query) {
+
+		query = JSON.parse(query);
+
+		var list = query.list.map(function(item) {
+			return item.modelName;
+		});
+
+		var string = 'QUERY-' + list.join('-');
+
+		return string;
+
+    }
 
 });
