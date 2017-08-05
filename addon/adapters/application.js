@@ -20,7 +20,7 @@ export default DS.JSONAPIAdapter.extend(Host,{
 		this.set('namespace', config.APP.api_namespace);
 
         if ( this.get('fastboot.isFastBoot') === true ) {
-
+            
             this.set('host', this.getHost());
 
         }
