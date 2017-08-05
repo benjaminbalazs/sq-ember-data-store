@@ -22,9 +22,10 @@ export default Ember.Mixin.create({
         var host = config.APP.protocol + config.APP.domain;
 
         var headers = this.get('fastboot.request.headers');
+        console.log(headers);
         var realHost = headers.get('X-Real-Host');
         var realScheme = headers.get('X-Real-Scheme');
-    
+
         if ( realHost && realScheme ) {
             host = realScheme + '://' + realHost;
         }
