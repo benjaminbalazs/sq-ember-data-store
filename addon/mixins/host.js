@@ -8,7 +8,7 @@ export default Ember.Mixin.create({
     getHost() {
 
         var host = this.getDomain();
-
+    
         if ( config.fastboot.api_namespace ) {
             return host + '/' + config.fastboot.api_namespace;
         } else {
@@ -22,7 +22,7 @@ export default Ember.Mixin.create({
         var host = config.APP.protocol + config.APP.domain;
 
         var headers = this.get('fastboot.request.headers');
-        
+
         var realHost = headers.get('X-Real-Host');
         var realScheme = headers.get('X-Real-Scheme');
 
