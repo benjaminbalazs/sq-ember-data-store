@@ -63,10 +63,10 @@ export default Ember.Service.extend({
 
 		} else {
 
-			return this.get('request').GET("jsonapi/" + encodeURIComponent(query), authenticate, null, null, false).then(function(data) {
+			return this.get('request').GET("query/" + encodeURIComponent(query), authenticate, null, null, false).then(function(data) {
 
 				self.addShoebox(query);
-
+				
 				self.get('store').pushPayload(data);
 
 				return Ember.RSVP.Promise.resolve();

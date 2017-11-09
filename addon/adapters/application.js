@@ -7,7 +7,7 @@ export default DS.JSONAPIAdapter.extend(Host,{
 
     fastboot: Ember.inject.service(),
 
-    headers: Ember.computed('session.headers.Token', 'session.headers.User-ID', 'session.headers.Socket-ID', 'session.headers.Site-ID', function() {
+    headers: Ember.computed('session.headers.Authorization', 'session.headers.Socket-ID', 'session.headers.Site-ID', function() {
 
         return this.get('session.headers');
 
@@ -20,7 +20,7 @@ export default DS.JSONAPIAdapter.extend(Host,{
 		this.set('namespace', config.APP.api_namespace);
 
         if ( this.get('fastboot.isFastBoot') === true ) {
-            
+
             this.set('host', this.getHost());
 
         }

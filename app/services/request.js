@@ -57,8 +57,7 @@ export default Ember.Service.extend(Host,{
         headers['Access-Control-Allow-Origin'] = '*';
 
         if ( authenticate ) {
-            headers['User-ID'] = this.get('session.headers.User-ID');
-            headers['Token'] = this.get('session.headers.Token');
+            headers['Authorization'] = this.get('session.headers.Authorization');
         }
 
         return this.factory('POST', path, headers, data, relative, 'application/vnd.api+json');
