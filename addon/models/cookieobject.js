@@ -93,7 +93,6 @@ export default Ember.Object.extend({
 
             var date = new Date();
             date.setTime(date.getTime() + (365*24*60*60*1000));
-            var expires = date.toUTCString();
 
             var domain = this.host();
 
@@ -102,7 +101,7 @@ export default Ember.Object.extend({
 
             this.get('cookies').write(this.get('storageKey'), JSON.stringify(this.getContent()), {
                 secure: secure,
-                expires: expires,
+                expires: date,
                 domain: domain,
                 path: '/'
             });
