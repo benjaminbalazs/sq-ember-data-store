@@ -22,7 +22,6 @@ export default Ember.Mixin.create({
                 console.log(key, object, valami, nagy);
 
             });
-            //console.log(key, relationship);
 
         });
 
