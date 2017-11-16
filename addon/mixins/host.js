@@ -5,6 +5,8 @@ export default Ember.Mixin.create({
 
     fastboot: Ember.inject.service(),
 
+    //
+
     getHost() {
 
         var host = this.getDomain();

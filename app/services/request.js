@@ -1,12 +1,12 @@
 import Ember from 'ember';
 import config from 'ember-get-config';
 import fetch from 'fetch';
-import Host from 'sq-ember-data-store/mixins/host';
 
-export default Ember.Service.extend(Host,{
+export default Ember.Service.extend({
 
     session: Ember.inject.service(),
     fastboot: Ember.inject.service(),
+    location: Ember.inject.service(),
 
     // GET ---------------------------------------------------------------------
 
@@ -99,12 +99,8 @@ export default Ember.Service.extend(Host,{
             }
 
             // URL
+            var url = self.get('location.domain') + config.APP.api_namespace + "/" + path;
 
-            var url = "/" + config.APP.api_namespace + "/" + path;
-
-            if ( self.get('fastboot.isFastBoot') === true ) {
-                url = self.getHost() + "/" + config.APP.api_namespace + "/" + path;
-            }
             if ( relative === true ) {
                 url = path;
             }

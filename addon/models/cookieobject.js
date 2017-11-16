@@ -77,12 +77,16 @@ export default Ember.Object.extend({
 
     },
 
-    host() {
+    domain() {
 
-        if ( this.get('fastboot.isFastBoot') !== true ) {
-            return window.location.host;
+        if ( config.APP.cookieDomain ) {
+            return config.APP.cookieDomain;
         } else {
-            return this.get('fastboot.request.host');
+            if ( this.get('fastboot.isFastBoot') !== true ) {
+                return window.location.host;
+            } else {
+                return this.get('fastboot.request.host');
+            }
         }
 
     },
@@ -94,7 +98,7 @@ export default Ember.Object.extend({
             var date = new Date();
             date.setTime(date.getTime() + (365*24*60*60*1000));
 
-            var domain = this.host();
+            var domain = this.domain();
 
             var secure = false;
             if ( config.environment === "production" ) { secure = true; }
