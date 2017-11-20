@@ -2,25 +2,20 @@ import Ember from 'ember';
 
 export default Ember.Mixin.create({
 
-	save(model, param) {
+	saveAndLink(model, param) {
 
 		var self = this;
 
-        return self._super().then(function() {
+		return this.save().then(function() {
 
-			if ( model ) {
+			model.get(param).pushObject(self);
 
-				model.get(param).pushObject(self);
+			return model.save().then(function() {
 
-				model.save().then(function() {
+				return Ember.RSVP.Promise.resolve(self);
 
-					return Ember.RSVP.Promise.resolve();
+			});
 
-				});
-
-			} else {
-				return Ember.RSVP.Promise.resolve();
-			}
 		});
 
 	}

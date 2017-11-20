@@ -44,12 +44,6 @@ export default Ember.Service.extend({
 
 	// QUERY -------------------------------------------------------------------
 
-	init() {
-
-		this._super();
-
-	},
-
 	query(list, authenticate) {
 
 		var self = this;
@@ -66,7 +60,7 @@ export default Ember.Service.extend({
 			return this.get('request').GET("query/" + encodeURIComponent(query), authenticate, null, null, false).then(function(data) {
 
 				self.addShoebox(query);
-				
+
 				self.get('store').pushPayload(data);
 
 				return Ember.RSVP.Promise.resolve();

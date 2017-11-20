@@ -10,4 +10,8 @@ export default DS.JSONAPISerializer.extend({
 		return key;
 	},
 
+	_shouldSerializeHasMany(snapshot, key, relationship) {
+    	return true;
+  	},
+
 });

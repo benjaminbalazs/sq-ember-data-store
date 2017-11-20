@@ -87,6 +87,8 @@ export default Ember.Service.extend({
                 object.headers = headers;
             }
 
+            object.credentials = "omit";
+
             // GET
             if ( method !== "GET" ) {
 

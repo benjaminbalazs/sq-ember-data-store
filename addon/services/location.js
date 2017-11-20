@@ -5,6 +5,25 @@ export default Ember.Service.extend({
 
     fastboot: Ember.inject.service(),
 
+    // ROOT
+
+    root: Ember.computed(function() {
+
+        let host = this.get('host').split('.');
+
+        if ( host.length > 2 ) {
+
+            let tld = host[host.length-1];
+            let domain = host[host.length-2];
+
+            return domain + "." + tld;
+
+        } else {
+            return host;
+        }
+
+    }),
+
     // HOST
 
     host: Ember.computed(function() {
@@ -70,6 +89,22 @@ export default Ember.Service.extend({
     domain: Ember.computed(function() {
 
         return this.get('protocol') + this.get('host');
+
+    }),
+
+    // PATH
+
+    path: Ember.computed(function() {
+
+        if ( this.get('fastboot.isFastBoot') === true ) {
+
+            return this.get('fastboot.request.path');
+
+        } else {
+
+            return window.location.pathname;
+
+        }
 
     }),
 
