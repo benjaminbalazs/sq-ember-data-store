@@ -19,7 +19,9 @@ export default Ember.Service.extend({
             return domain + "." + tld;
 
         } else {
-            return host;
+
+            return this.get('host');
+
         }
 
     }),
@@ -104,6 +106,18 @@ export default Ember.Service.extend({
 
             return window.location.pathname;
 
+        }
+
+    }),
+
+    //
+
+    tld: Ember.computed(function() {
+
+        if ( this.get('host').indexOf('.dev') !== -1 ) {
+            return '.dev';
+        } else {
+            return '.com';
         }
 
     }),

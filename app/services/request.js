@@ -114,6 +114,7 @@ export default Ember.Service.extend({
                 }
 
                 self.set('processing', false);
+
                 resolve(data);
 
             }).catch(function(error) {

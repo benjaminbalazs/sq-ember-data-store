@@ -4,7 +4,7 @@ import config from 'ember-get-config';
 export default Ember.Object.extend({
 
     cookies: Ember.inject.service(),
-    fastboot: Ember.inject.service(),
+    location: Ember.inject.service(),
 
     set(keyName, value) {
 
@@ -79,13 +79,13 @@ export default Ember.Object.extend({
 
     domain() {
 
-        if ( config.APP.cookieDomain ) {
-            return config.APP.cookieDomain;
+        if ( this.get('ignoreDomain') === true ) {
+            return null
         } else {
-            if ( this.get('fastboot.isFastBoot') !== true ) {
-                return window.location.host;
+            if ( config['sq-ember-authentication'].cookieDomain ) {
+                return config['sq-ember-authentication'].cookieDomain;
             } else {
-                return this.get('fastboot.request.host');
+                return this.get('location.host');
             }
         }
 
@@ -111,7 +111,9 @@ export default Ember.Object.extend({
             });
 
         } catch (error) {
+
             console.error(error);
+
         }
 
     }

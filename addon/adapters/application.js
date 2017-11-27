@@ -13,7 +13,7 @@ export default DS.JSONAPIAdapter.extend({
 	},
 
     headers: Ember.computed('session.headers.Authorization', 'session.headers.Socket', function() {
-
+    
         return this.get('session.headers');
 
     }),
