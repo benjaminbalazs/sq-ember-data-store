@@ -87,7 +87,7 @@ export default Ember.Service.extend({
                 object.headers = headers;
             }
 
-            object.credentials = "omit";
+            //object.credentials = "omit";
 
             // GET
             if ( method !== "GET" ) {
@@ -107,15 +107,15 @@ export default Ember.Service.extend({
                 url = path;
             }
 
-            fetch( url, object ).then(self.checkStatus).then(function(response) { return response.json(); }).then(function(data) {
+            fetch( url, object ).then(self.checkStatus).then(function(response) { return response.json(); }).then(function(result) {
 
                 if ( self.get('fastboot.isFastBoot') === true && shoebox !== false ) {
-                    self.addShoebox(method, path, data);
+                    self.addShoebox(method, path, result);
                 }
 
                 self.set('processing', false);
 
-                resolve(data);
+                resolve(result);
 
             }).catch(function(error) {
 
