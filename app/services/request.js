@@ -12,8 +12,10 @@ export default Ember.Service.extend({
 
     GET(path, authenticate, relative, headers, shoebox) {
 
-        if ( !headers ) {
+        if ( !headers && authenticate === true ) {
             headers = this.get('session.headers');
+        } else {
+            headers = {};
         }
 
         if ( this.get('fastboot.isFastBoot') !== true && shoebox !== false ) {
@@ -21,25 +23,19 @@ export default Ember.Service.extend({
             var data = this.getShoebox('GET', path);
 
             if ( data ) {
+
                 return Ember.RSVP.Promise.resolve(data);
+
             } else {
-                return this._get(path, authenticate, relative, headers, shoebox);
+
+                return this.factory('GET', path, headers, relative, 'application/vnd.api+json', shoebox);
+
             }
 
         } else {
 
-            return this._get(path, authenticate, relative, headers, shoebox);
-
-        }
-
-    },
-
-    _get(path, authenticate, relative, headers, shoebox) {
-
-        if ( authenticate ) {
-            return this.factory('GET', path, this.get('session.headers'), relative, 'application/vnd.api+json', shoebox);
-        } else {
             return this.factory('GET', path, headers, relative, 'application/vnd.api+json', shoebox);
+
         }
 
     },
@@ -66,76 +62,64 @@ export default Ember.Service.extend({
 
     // PRIVATE -----------------------------------------------------------------
 
-    factory(method, path, headers, data, relative, contentType, shoebox) {
+    async factory(method, path, headers, data, relative, contentType, shoebox) {
 
         this.set('processing', true);
 
-        var self = this;
+        var object = { method: method, };
 
-        return new Ember.RSVP.Promise(function(resolve, reject) {
+        // HEADERS
+        if ( !headers ) { headers = {}; }
 
-            var object = { method: method, };
+        // CONTENT TYPE
+        if ( contentType ) {
+            headers['Content-Type'] = contentType;
+        }
+        if ( headers ) {
+            object.headers = headers;
+        }
 
-            // HEADERS
-            if ( !headers ) { headers = {}; }
+        // GET
+        if ( method !== "GET" ) {
 
-            // CONTENT TYPE
             if ( contentType ) {
-                headers['Content-Type'] = contentType;
-            }
-            if ( headers ) {
-                object.headers = headers;
-            }
-
-            //object.credentials = "omit";
-
-            // GET
-            if ( method !== "GET" ) {
-
-                if ( contentType ) {
-                    object.body = JSON.stringify(data);
-                } else {
-                    object.body = data;
-                }
-
+                object.body = JSON.stringify(data);
+            } else {
+                object.body = data;
             }
 
-            // URL
-            var url = self.get('location.domain') + config.APP.api_namespace + "/" + path;
+        }
 
-            if ( relative === true ) {
-                url = path;
-            }
+        // URL
+        var url = this.get('location.domain') + config.APP.api_namespace + "/" + path;
 
-            fetch( url, object ).then(self.checkStatus).then(function(response) { return response.json(); }).then(function(result) {
+        if ( relative === true ) {
+            url = path;
+        }
 
-                if ( self.get('fastboot.isFastBoot') === true && shoebox !== false ) {
-                    self.addShoebox(method, path, result);
-                }
+        try {
 
-                self.set('processing', false);
+            const response = await fetch( url, object );
+            const result = await response.json();
 
-                resolve(result);
-
-            }).catch(function(error) {
-
-                self.set('processing', false);
-                reject(error);
-
-            });
-
-        });
-
-    },
-
-    checkStatus(response) {
-
-        if ( response.status >= 200 && response.status < 300 ) {
-            return response;
-        } else {
-            return response.json().then(function(result) {
+            if ( response.status < 200 || response.status >= 300 ) {
                 throw result;
-            });
+            }
+
+            if ( this.get('fastboot.isFastBoot') === true && shoebox !== false ) {
+                this.addShoebox(method, path, result);
+            }
+
+            this.set('processing', false);
+
+            return result;
+
+        } catch (error) {
+
+            this.set('processing', false);
+
+            return Ember.RSVP.Promise.reject(error);
+
         }
 
     },
