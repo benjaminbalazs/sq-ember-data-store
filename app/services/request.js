@@ -17,7 +17,7 @@ export default Ember.Service.extend({
         } else {
             headers = {};
         }
-
+        
         if ( this.get('fastboot.isFastBoot') !== true && shoebox !== false ) {
 
             var data = this.getShoebox('GET', path);
