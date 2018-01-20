@@ -60,9 +60,21 @@ export default Ember.Object.extend({
         var list = Object.keys(this);
 
         if ( this.get('observables') ) {
+
             list = list.filter(function(item) {
                 return ( self.get('observables').indexOf(item) !== -1 );
             });
+
+        } else {
+
+            list = list.filter(function(item) {
+                if ( item !== 'storageKey' && item !== 'container' && item !== 'ignoreDomain' && item !== '_super' ) {
+                    return true;
+                } else {
+                    return false;
+                }
+            });
+
         }
 
         var object = {};
