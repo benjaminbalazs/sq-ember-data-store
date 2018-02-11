@@ -63,7 +63,7 @@ export default Ember.Service.extend({
         if ( this.get('fastboot.isFastBoot') === true ) {
 
             const headers = this.get('fastboot.request.headers');
-            console.log('headers', headers);
+            
             if ( headers.get('x-forwarded-protocol') ) {
 
                 return  headers.get('x-forwarded-protocol') + "://";
