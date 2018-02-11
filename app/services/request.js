@@ -17,7 +17,7 @@ export default Ember.Service.extend({
         } else {
             headers = {};
         }
-        
+
         if ( this.get('fastboot.isFastBoot') !== true && shoebox !== false ) {
 
             var data = this.getShoebox('GET', path);
@@ -92,7 +92,7 @@ export default Ember.Service.extend({
 
         // URL
         var url = this.get('location.domain') + config.APP.api_namespace + "/" + path;
-
+        console.log(url);
         if ( relative === true ) {
             url = path;
         }
