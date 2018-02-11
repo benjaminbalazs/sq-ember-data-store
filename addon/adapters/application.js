@@ -16,6 +16,7 @@ export default DS.JSONAPIAdapter.extend({
         if ( this.get('fasboot.isFastBoot') === true ) {
             this.set('host', this.get('location.domain'));
         }
+        console.log('adapter:', this.get('location.domain') );
 
 	},
 
