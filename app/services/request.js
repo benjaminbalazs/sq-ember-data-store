@@ -91,8 +91,8 @@ export default Ember.Service.extend({
         }
 
         // URL
-        var url = this.get('location.domain') + config.APP.api_namespace + "/" + path;
-        
+        var url = this.get('location.domain') + "/" + config.APP.api_namespace + "/" + path;
+
         if ( relative === true ) {
             url = path;
         }
