@@ -13,10 +13,11 @@ export default DS.JSONAPIAdapter.extend({
 
 		this.set('namespace', config.APP.api_namespace);
 
-        if ( this.get('fasboot.isFastBoot') === true ) {
+        if ( this.get('fastboot.isFastBoot') === true ) {
             this.set('host', this.get('location.domain'));
+            console.log('adapter:', this.get('location.domain') );
         }
-        console.log('adapter:', this.get('location.domain') );
+
 
 	},
 
