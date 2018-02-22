@@ -143,7 +143,11 @@ export default Ember.Service.extend({
     getSelector(path, method) {
 
         var id = path + "-" + method;
-        return id.split('/').join('-');
+        id = id.split('/').join('-');
+        id = id.split('?').join('-');
+        id = id.split('=').join('-');
+
+        return id;
 
     }
 
