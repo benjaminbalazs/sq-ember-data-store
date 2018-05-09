@@ -1,7 +1,7 @@
-import Ember from 'ember';
+import Mixin from '@ember/object/mixin';
 import { belongsTo } from 'ember-data/relationships';
 
-export default Ember.Mixin.create({
+export default Mixin.create({
 
 	owner: belongsTo('user'),
 

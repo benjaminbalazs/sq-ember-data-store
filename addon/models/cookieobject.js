@@ -1,10 +1,11 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import EmberObject from '@ember/object';
 import config from 'ember-get-config';
 
-export default Ember.Object.extend({
+export default EmberObject.extend({
 
-    cookies: Ember.inject.service(),
-    location: Ember.inject.service(),
+    cookies: service(),
+    location: service(),
 
     set(keyName, value) {
 

@@ -1,9 +1,10 @@
+import EmberObject from '@ember/object';
 import DS from 'ember-data';
 import Model from './../models/model';
 
 export default DS.Store.extend({
 
-	lengths: Ember.Object.create(),
+	lengths: EmberObject.create(),
 
     increment(type) {
 

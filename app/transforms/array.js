@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import { A } from '@ember/array';
 import DS from 'ember-data';
 
 export default DS.Transform.extend({
@@ -8,7 +8,7 @@ export default DS.Transform.extend({
     },
 
     deserialize: function(serialized) {
-        return Ember.A(serialized);
+        return A(serialized);
     }
     
 });

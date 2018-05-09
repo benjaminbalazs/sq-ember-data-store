@@ -1,10 +1,11 @@
-import Ember from 'ember';
+import { Promise as EmberPromise } from 'rsvp';
+import Service, { inject as service } from '@ember/service';
 
-export default Ember.Service.extend({
+export default Service.extend({
 
-	store: Ember.inject.service(),
-	request: Ember.inject.service(),
-	fastboot: Ember.inject.service(),
+	store: service(),
+	request: service(),
+	fastboot: service(),
 
 	//
 
@@ -14,7 +15,7 @@ export default Ember.Service.extend({
 
 		if ( list.get('length') > 0 ) {
 
-			return Ember.RSVP.Promise.resolve(list);
+			return EmberPromise.resolve(list);
 
 		} else {
 
@@ -32,7 +33,7 @@ export default Ember.Service.extend({
 
 		if ( record ) {
 
-			return Ember.RSVP.Promise.resolve(record);
+			return EmberPromise.resolve(record);
 
 		} else {
 
@@ -53,7 +54,7 @@ export default Ember.Service.extend({
 
 		if ( this.getShoebox(query) === true ) {
 
-			return Ember.RSVP.Promise.resolve();
+			return EmberPromise.resolve();
 
 		} else {
 
@@ -63,7 +64,7 @@ export default Ember.Service.extend({
 
 				self.get('store').pushPayload(data);
 
-				return Ember.RSVP.Promise.resolve();
+				return EmberPromise.resolve();
 
 			});
 

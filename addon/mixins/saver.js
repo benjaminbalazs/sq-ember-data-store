@@ -1,6 +1,7 @@
-import Ember from 'ember';
+import { Promise as EmberPromise } from 'rsvp';
+import Mixin from '@ember/object/mixin';
 
-export default Ember.Mixin.create({
+export default Mixin.create({
 
 	saveAndLink(model, param) {
 
@@ -12,7 +13,7 @@ export default Ember.Mixin.create({
 
 			return model.save().then(function() {
 
-				return Ember.RSVP.Promise.resolve(self);
+				return EmberPromise.resolve(self);
 
 			});
 

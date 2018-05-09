@@ -1,12 +1,13 @@
-import Ember from 'ember';
+import { Promise as EmberPromise } from 'rsvp';
+import Service, { inject as service } from '@ember/service';
 import config from 'ember-get-config';
 import fetch from 'fetch';
 
-export default Ember.Service.extend({
+export default Service.extend({
 
-    session: Ember.inject.service(),
-    fastboot: Ember.inject.service(),
-    location: Ember.inject.service(),
+    session: service(),
+    fastboot: service(),
+    location: service(),
 
     // GET ---------------------------------------------------------------------
 
@@ -24,7 +25,7 @@ export default Ember.Service.extend({
 
             if ( data ) {
 
-                return Ember.RSVP.Promise.resolve(data);
+                return EmberPromise.resolve(data);
 
             } else {
 
@@ -118,7 +119,7 @@ export default Ember.Service.extend({
 
             this.set('processing', false);
 
-            return Ember.RSVP.Promise.reject(error);
+            return EmberPromise.reject(error);
 
         }
 

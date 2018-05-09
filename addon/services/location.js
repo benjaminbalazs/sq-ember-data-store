@@ -1,13 +1,14 @@
-import Ember from 'ember';
+import { computed } from '@ember/object';
+import Service, { inject as service } from '@ember/service';
 import config from 'ember-get-config';
 
-export default Ember.Service.extend({
+export default Service.extend({
 
-    fastboot: Ember.inject.service(),
+    fastboot: service(),
 
     // ROOT
 
-    root: Ember.computed(function() {
+    root: computed(function() {
 
         let host = this.get('host').split('.');
 
@@ -28,7 +29,7 @@ export default Ember.Service.extend({
 
     // HOST
 
-    host: Ember.computed(function() {
+    host: computed(function() {
 
         if ( this.get('fastboot.isFastBoot') === true ) {
 
@@ -58,7 +59,7 @@ export default Ember.Service.extend({
 
     // PROTOCOL
 
-    protocol: Ember.computed(function() {
+    protocol: computed(function() {
 
         if ( this.get('fastboot.isFastBoot') === true ) {
 
@@ -88,7 +89,7 @@ export default Ember.Service.extend({
 
     // DOMAIN
 
-    domain: Ember.computed(function() {
+    domain: computed(function() {
 
         return this.get('protocol') + this.get('host');
 
@@ -96,7 +97,7 @@ export default Ember.Service.extend({
 
     // PATH
 
-    path: Ember.computed(function() {
+    path: computed(function() {
 
         if ( this.get('fastboot.isFastBoot') === true ) {
 
@@ -112,7 +113,7 @@ export default Ember.Service.extend({
 
     //
 
-    tld: Ember.computed(function() {
+    tld: computed(function() {
 
         if ( this.get('host').indexOf('.dev') !== -1 ) {
             return '.dev';

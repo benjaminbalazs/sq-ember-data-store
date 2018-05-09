@@ -1,11 +1,12 @@
+import { computed } from '@ember/object';
+import { inject as service } from '@ember/service';
 import DS from 'ember-data';
-import Ember from 'ember';
 import config from 'ember-get-config';
 
 export default DS.JSONAPIAdapter.extend({
 
-    location: Ember.inject.service(),
-    fastboot: Ember.inject.service(),
+    location: service(),
+    fastboot: service(),
 
     init() {
 
@@ -19,7 +20,7 @@ export default DS.JSONAPIAdapter.extend({
 
 	},
 
-    headers: Ember.computed('session.headers.Authorization', 'session.headers.Socket', function() {
+    headers: computed('session.headers.Authorization', 'session.headers.Socket', function() {
 
         return this.get('session.headers');
 
