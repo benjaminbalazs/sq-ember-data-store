@@ -14,4 +14,14 @@ export default DS.JSONAPISerializer.extend({
     	return true;
   	},
 
+	serializeAttribute(snapshot, json, key, attribute) {
+
+	    if ( attribute.options && attribute.options.readOnly ) {
+	    	return;
+	    }
+		
+	    this._super(...arguments);
+
+  	},
+
 });
