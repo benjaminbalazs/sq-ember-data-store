@@ -10,7 +10,7 @@ export default DS.JSONAPISerializer.extend({
 		return key;
 	},
 
-	_shouldSerializeHasMany(snapshot, key, relationship) {
+	shouldSerializeHasMany(snapshot, key, relationship) {
     	return true;
   	},
 
@@ -19,7 +19,7 @@ export default DS.JSONAPISerializer.extend({
 	    if ( attribute.options && attribute.options.readOnly ) {
 	    	return;
 	    }
-		
+
 	    this._super(...arguments);
 
   	},

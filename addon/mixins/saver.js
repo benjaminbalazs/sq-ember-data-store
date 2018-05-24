@@ -12,7 +12,7 @@ export default Mixin.create({
 			model.get(param).pushObject(self);
 
 			return model.save().then(function() {
-
+				
 				return EmberPromise.resolve(self);
 
 			});
