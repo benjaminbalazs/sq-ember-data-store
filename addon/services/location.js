@@ -64,7 +64,7 @@ export default Service.extend({
         if ( this.get('fastboot.isFastBoot') === true ) {
 
             const headers = this.get('fastboot.request.headers');
-            
+
             if ( headers.get('x-forwarded-protocol') ) {
 
                 return  headers.get('x-forwarded-protocol') + "://";
@@ -115,8 +115,8 @@ export default Service.extend({
 
     tld: computed(function() {
 
-        if ( this.get('host').indexOf('.dev') !== -1 ) {
-            return '.dev';
+        if ( this.get('host').indexOf('.test') !== -1 ) {
+            return '.test';
         } else {
             return '.com';
         }
