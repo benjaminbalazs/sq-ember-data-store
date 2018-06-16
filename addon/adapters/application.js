@@ -26,15 +26,4 @@ export default DS.JSONAPIAdapter.extend({
 
     }),
 
-    ajaxOptions(url, type, options) {
-
-      let hash = this._super(...arguments);
-
-      hash.withCredentials = false;
-      hash.xhrFields = { withCredentials: false };
-
-      return hash;
-
-    }
-
 });
