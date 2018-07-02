@@ -19,7 +19,7 @@ export default Service.extend({
             headers = {};
         }
 
-        if ( this.get('fastboot.isFastBoot') !== true && shoebox !== false ) {
+        if ( this.get('fastboot.isFastBoot') !== true && shoebox !== false && relative !== true ) {
 
             var data = this.getShoebox('GET', path);
 
@@ -29,13 +29,13 @@ export default Service.extend({
 
             } else {
 
-                return this.factory('GET', path, headers, relative, 'application/vnd.api+json', shoebox);
+                return this.factory('GET', path, headers, null, relative, 'application/vnd.api+json', shoebox);
 
             }
 
         } else {
 
-            return this.factory('GET', path, headers, relative, 'application/vnd.api+json', shoebox);
+            return this.factory('GET', path, headers, null, relative, 'application/vnd.api+json', shoebox);
 
         }
 
