@@ -51,7 +51,11 @@ export default Service.extend({
 
         } else {
 
-            return window.location.host;
+            if ( config.APP.host ) {
+                return config.APP.host;
+            } else {
+                return window.location.host;
+            }
 
         }
 
@@ -81,7 +85,15 @@ export default Service.extend({
 
         } else {
 
-            return window.location.protocol + "//";
+            if ( config.APP.protocol ) {
+
+                return config.APP.protocol + "://";
+
+            } else {
+                
+                return window.location.protocol + "//";
+
+            }
 
         }
 

@@ -16,6 +16,12 @@ export default DS.JSONAPIAdapter.extend({
 
         if ( this.get('fastboot.isFastBoot') === true ) {
             this.set('host', this.get('location.domain'));
+        } else if ( config.APP.host ) {
+            this.set('host', config.APP.host);
+        }
+
+        if ( config.APP.protocol ) {
+            this.set('host', config.APP.protocol + "://" + this.get('host'));
         }
 
 	},
