@@ -94,7 +94,12 @@ export default Service.extend({
         object.credentials = "omit";
 
         // URL
-        var url = this.get('location.domain') + "/" + config.APP.api_namespace + "/" + path;
+        var url
+        if (  config.APP.api_namespace ) {
+            url = this.get('location.domain') + "/" + config.APP.api_namespace + "/" + path;
+        } else {
+            url = this.get('location.domain') + "/" + path;
+        }
 
         if ( relative === true ) {
             url = path;
